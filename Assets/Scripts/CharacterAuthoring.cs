@@ -2,6 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Rendering;
 using UnityEngine;
 
 public struct InitializeCharacterFlag : IComponentData, IEnableableComponent
@@ -14,6 +15,12 @@ public struct CharacterMoveDirection : IComponentData
 }
 
 public struct CharacterMoveSpeed : IComponentData
+{
+    public float Value;
+}
+
+[MaterialProperty("_FacingDirection")]
+public struct FacingDirectionOverride : IComponentData
 {
     public float Value;
 }
@@ -32,6 +39,10 @@ public class CharacterAuthoring : MonoBehaviour
             AddComponent(entity, new CharacterMoveSpeed()
             {
                 Value = authoring.MoveSpeed
+            });
+            AddComponent(entity, new FacingDirectionOverride()
+            {
+                Value = 1
             });
         }
     }
@@ -63,5 +74,20 @@ public partial struct CharacterMoveSystem : ISystem
             var moveSpeed2D = direction.Value * speed.Value;
             velocity.ValueRW.Linear = new float3(moveSpeed2D, 0f);
         }
+    }
+}
+
+public partial struct GloabalTimeUpdateSystem : ISystem
+{
+    private static int _globalTimeShaderPropertyID;
+
+    public void OnCreate(ref SystemState state)
+    {
+        _globalTimeShaderPropertyID = Shader.PropertyToID("_GlobalTime");
+    }
+
+    public void OnUpdate(ref SystemState state)
+    {
+        Shader.SetGlobalFloat(_globalTimeShaderPropertyID, (float)SystemAPI.Time.ElapsedTime);
     }
 }
