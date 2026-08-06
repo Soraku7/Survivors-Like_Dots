@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -18,6 +19,20 @@ namespace DefaultNamespace
     {
     }
 
+    [MaterialProperty("_AnimationIndex")]
+    public struct AnimationIndexOverride : IComponentData
+    {
+        public float Value;
+    }
+
+    public enum PlayerAnimationIndex : byte
+    {
+        Movement = 0,
+        Idle = 1,
+
+        None = byte.MaxValue
+    }
+
     public class PlayerAuthoring : MonoBehaviour
     {
         public class Baker : Baker<PlayerAuthoring>
@@ -28,6 +43,7 @@ namespace DefaultNamespace
                 AddComponent<PlayerTag>(entity);
                 AddComponent<InitializeCameraTargetTag>(entity);
                 AddComponent<CameraTarget>(entity);
+                AddComponent<AnimationIndexOverride>(entity);
             }
         }
     }
