@@ -26,9 +26,20 @@ public struct FacingDirectionOverride : IComponentData
     public float Value;
 }
 
+public struct CharacterMaxHitPoints : IComponentData
+{
+    public int Value;
+}
+
+public struct CharacterCurrentHitPoints : IComponentData
+{
+    public int Value;
+}
+
 public class CharacterAuthoring : MonoBehaviour
 {
     public float MoveSpeed;
+    public int HitPoints;
 
     private class Baker : Baker<CharacterAuthoring>
     {
@@ -44,6 +55,10 @@ public class CharacterAuthoring : MonoBehaviour
             AddComponent(entity, new FacingDirectionOverride()
             {
                 Value = 1
+            });
+            AddComponent(entity, new CharacterMaxHitPoints()
+            {
+                Value = authoring.HitPoints
             });
         }
     }
@@ -84,7 +99,9 @@ public partial struct CharacterMoveSystem : ISystem
             if (SystemAPI.HasComponent<PlayerTag>(entity))
             {
                 var animationOverride = SystemAPI.GetComponentRW<AnimationIndexOverride>(entity);
-                var animationType = math.lengthsq(moveSpeed2D) > float.Epsilon? PlayerAnimationIndex.Movement : PlayerAnimationIndex.Idle;
+                var animationType = math.lengthsq(moveSpeed2D) > float.Epsilon
+                    ? PlayerAnimationIndex.Movement
+                    : PlayerAnimationIndex.Idle;
                 animationOverride.ValueRW.Value = (float)animationType;
             }
         }
