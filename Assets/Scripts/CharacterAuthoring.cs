@@ -36,6 +36,11 @@ public struct CharacterCurrentHitPoints : IComponentData
     public int Value;
 }
 
+public struct DamageThisFrame : IBufferElementData
+{
+    public int Value;
+}
+
 public class CharacterAuthoring : MonoBehaviour
 {
     public float MoveSpeed;
@@ -60,6 +65,7 @@ public class CharacterAuthoring : MonoBehaviour
             {
                 Value = authoring.HitPoints
             });
+            AddBuffer<DamageThisFrame>(entity);
         }
     }
 }
@@ -120,5 +126,25 @@ public partial struct GloabalTimeUpdateSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         Shader.SetGlobalFloat(_globalTimeShaderPropertyID, (float)SystemAPI.Time.ElapsedTime);
+    }
+}
+
+public partial struct ProcessDamageThisFrameSystem : ISystem
+{
+    [BurstCompile]
+    public void OnUpdate(ref SystemState state)
+    {
+        foreach (var (hitPoints, damageThisFrames) in SystemAPI
+                     .Query<RefRW<CharacterCurrentHitPoints>, DynamicBuffer<DamageThisFrame>>())
+        {
+            if (damageThisFrames.IsEmpty) continue;
+
+            foreach (var damage in damageThisFrames)
+            {
+                hitPoints.ValueRW.Value -= damage.Value;
+            }
+
+            damageThisFrames.Clear();
+        }
     }
 }
