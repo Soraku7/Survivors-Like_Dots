@@ -99,7 +99,7 @@ namespace DefaultNamespace
             foreach (var (expirationTimestamp, cooldownEnabled) in SystemAPI
                          .Query<EnemyCooldownExpirationTimestamp, EnabledRefRW<EnemyCooldownExpirationTimestamp>>())
             {
-                if (expirationTimestamp.Value < elapsedTime) continue;
+                if (expirationTimestamp.Value > elapsedTime) continue;
                 cooldownEnabled.ValueRW = false;
             }
 
