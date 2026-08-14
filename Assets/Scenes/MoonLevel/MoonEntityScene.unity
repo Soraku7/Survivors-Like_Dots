@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 897465305}
   - component: {fileID: 897465304}
   - component: {fileID: 897465303}
+  - component: {fileID: 897465306}
   m_Layer: 7
   m_Name: Alien
   m_TagString: Untagged
@@ -699,6 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bb6f8454b14dd7a61336ac4ad5672e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.EnemyAuthoring
+  AttackDamage: 5
+  CooldownTime: 0.5
 --- !u!114 &897465305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,6 +716,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAuthoring
   MoveSpeed: 2.5
   HitPoints: 0
+--- !u!65 &897465306
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897465299}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1338076338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAuthoring
   MoveSpeed: 5
-  HitPoints: 0
+  HitPoints: 100
 --- !u!114 &1949808769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,6 +1129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d87af0716a4c93a1393f33310ff58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.PlayerAuthoring
+  AttackPrefab: {fileID: 5192450183986406048, guid: 64b0596e8242c274eb675bf6ea3aa98f, type: 3}
+  CooldownTime: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
