@@ -120,7 +120,7 @@ public partial struct CharacterMoveSystem : ISystem
     }
 }
 
-public partial struct GloabalTimeUpdateSystem : ISystem
+public partial struct GlobalTimeUpdateSystem : ISystem
 {
     private static int _globalTimeShaderPropertyID;
 

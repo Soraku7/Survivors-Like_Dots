@@ -1131,6 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.PlayerAuthoring
   AttackPrefab: {fileID: 5192450183986406048, guid: 64b0596e8242c274eb675bf6ea3aa98f, type: 3}
   CooldownTime: 1
+  DectionSize: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
