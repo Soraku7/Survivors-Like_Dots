@@ -24,11 +24,17 @@ namespace DefaultNamespace
         public double Value;
     }
 
+    public struct GemPrefab : IComponentData
+    {
+        public Entity Value;
+    }
+
     [RequireComponent(typeof(CharacterAuthoring))]
     public class EnemyAuthoring : MonoBehaviour
     {
         public int AttackDamage;
         public float CooldownTime;
+        public GameObject GemPrefab;
 
         private class Baker : Baker<EnemyAuthoring>
         {
@@ -43,6 +49,10 @@ namespace DefaultNamespace
                 });
                 AddComponent<EnemyCooldownExpirationTimestamp>(entity);
                 SetComponentEnabled<EnemyCooldownExpirationTimestamp>(entity, false);
+                AddComponent(entity, new GemPrefab()
+                {
+                    Value = GetEntity(authoring.GemPrefab, TransformUsageFlags.Dynamic)
+                });
             }
         }
     }

@@ -48,6 +48,11 @@ namespace DefaultNamespace
         public double Value;
     }
 
+    public struct GemsCollectedCount : IComponentData
+    {
+        public int Value;
+    }
+
     public class PlayerAuthoring : MonoBehaviour
     {
         public GameObject AttackPrefab;
@@ -81,6 +86,7 @@ namespace DefaultNamespace
                     CollisionFilter = attackCollisionFilter
                 });
                 AddComponent<PlayerCooldownExpirationTimestamp>(entity);
+                AddComponent<GemsCollectedCount>(entity);
             }
         }
     }
