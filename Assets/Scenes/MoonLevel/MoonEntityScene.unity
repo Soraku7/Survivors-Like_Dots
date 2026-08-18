@@ -927,7 +927,7 @@ Transform:
   m_GameObject: {fileID: 1949808762}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.205, y: 0.068, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1010,6 +1010,7 @@ MonoBehaviour:
   AttackPrefab: {fileID: 5192450183986406048, guid: 64b0596e8242c274eb675bf6ea3aa98f, type: 3}
   CooldownTime: 1
   DectionSize: 10
+  WorldUIPrefab: {fileID: 6848332979229617546, guid: 1b8519ce5d7dc6e48bb4d207983180ca, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
