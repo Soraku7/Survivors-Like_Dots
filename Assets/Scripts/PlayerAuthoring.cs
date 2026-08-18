@@ -1,3 +1,4 @@
+using TMG.Survivors;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -53,6 +54,10 @@ namespace DefaultNamespace
         public int Value;
     }
 
+    public struct UpdateGemUIFlag : IComponentData, IEnableableComponent
+    {
+    }
+
     public class PlayerAuthoring : MonoBehaviour
     {
         public GameObject AttackPrefab;
@@ -87,6 +92,8 @@ namespace DefaultNamespace
                 });
                 AddComponent<PlayerCooldownExpirationTimestamp>(entity);
                 AddComponent<GemsCollectedCount>(entity);
+                AddComponent<UpdateGemUIFlag>(entity);
+                SetComponentEnabled<UpdateGemUIFlag>(entity, false);
             }
         }
     }
@@ -212,6 +219,18 @@ namespace DefaultNamespace
                 ecb.SetComponent(newAttack, LocalTransform.FromPositionRotation(spawnPosition, spawnOrientation));
 
                 expirationTimestamp.ValueRW.Value = elapsedTime + attackData.CooldownTime;
+            }
+        }
+    }
+
+    public partial struct UpdateGemUISystem : ISystem
+    {
+        public void OnUpdate(ref SystemState state)
+        {
+            foreach (var (gemCount, shouldUpdateUI) in SystemAPI.Query<GemsCollectedCount , EnabledRefRW<UpdateGemUIFlag>>())
+            {
+                GameUIController.Instance.UpdateGemsCollectedText(gemCount.Value);
+                shouldUpdateUI.ValueRW = false;
             }
         }
     }

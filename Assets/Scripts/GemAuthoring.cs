@@ -38,7 +38,8 @@ namespace DefaultNamespace
             {
                 GemLookup = SystemAPI.GetComponentLookup<GemTag>(true),
                 DestrotEntityLookup = SystemAPI.GetComponentLookup<DestroyEntityFlag>(),
-                GemsCollectedCountLookup = SystemAPI.GetComponentLookup<GemsCollectedCount>()
+                GemsCollectedCountLookup = SystemAPI.GetComponentLookup<GemsCollectedCount>(),
+                UpdateGemUILookup = SystemAPI.GetComponentLookup<UpdateGemUIFlag>()
             };
 
             var simulationSingleton = SystemAPI.GetSingleton<SimulationSingleton>();
@@ -52,6 +53,7 @@ namespace DefaultNamespace
         [ReadOnly] public ComponentLookup<GemTag> GemLookup;
         public ComponentLookup<DestroyEntityFlag> DestrotEntityLookup;
         public ComponentLookup<GemsCollectedCount> GemsCollectedCountLookup;
+        public ComponentLookup<UpdateGemUIFlag> UpdateGemUILookup;
 
         public void Execute(TriggerEvent triggerEvent)
         {
@@ -78,6 +80,8 @@ namespace DefaultNamespace
             var gemsCollectedCount = GemsCollectedCountLookup[playerEntity];
             gemsCollectedCount.Value++;
             GemsCollectedCountLookup[playerEntity] = gemsCollectedCount;
+
+            UpdateGemUILookup.SetComponentEnabled(playerEntity, true);
             DestrotEntityLookup.SetComponentEnabled(gemEntity, true);
         }
     }
